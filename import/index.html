@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="description" content="Provides bulk upload capability to Cherwell." /> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1 minimum-scale=1" />	
+	<meta charset="utf-8">
+	<meta name="theme-color" content="#ffffff">
+
+    <title id='Description'>Denali AI Service Engagement Manager System.</title>
+
+	<!-- Externally supplied script files -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+
+	<!-- Local common script files -->
+	<script type="text/javascript" src="/scripts/cherwell/constant_definitions.js"></script>
+    <script type="text/javascript" src="/scripts/cherwell/login.js"></script>
+
+	<!-- Page specific script files -->
+	<script src="js/import.js"></script>
+
+	<!-- Page specific Cascading Style Sheet files -->
+	<link rel="stylesheet" href="css/login_styles.css" type="text/css" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+	<link rel="stylesheet" href="css/unsemantic.css">
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="css/import.css"> 
+ 
+ 	<script type="text/javascript">
+        /**
+        * When the document is loaded we need to initialise the login button to call the login function in login.js.
+        */
+        $(document).ready(function () {
+            $("#doLogin").click(login);
+        });
+    </script>
+</head>
+<body>
+	<!-- This is the login form. It will be hidden once we log in to Cherwell -->
+	<div class="login-form" id="loginDiv">
+        <div class="loginTitle" style="margin:20px">
+            <h1>Login to Cherwell</h1>
+        </div>
+		<div>
+			<p style="visibility:hidden" id="waitMsg" >Logging in. Please wait...</p>
+		</div>
+		<form action="#" method="POST">
+			<input type="text" id="username" name="username" placeholder="username" />
+			<input type="password" id="password" name="password" placeholder="password" />
+			<p class="submit"><input type="submit" id="doLogin" name="commit" value="Login"></p>
+		</form>
+	</div>
+	
+	<!-- This is the import form. It will be shown once we log in to Cherwell -->
+	<div id="formDiv" style="visibility: hidden;margin-left:20px;margin-top:20px">
+		<div class="grid-container">
+			<div class="grid-25">
+				<img src="https://www.flycastpartners.com/wp-content/uploads/2021/01/FP20_Home_Small_Logo.png" style="height:8em" />
+			</div>		
+			<div class="grid-75 grid-parent">
+				<div class="grid-33 push-66">
+					<label>
+						Delimiter:<input type="text" size="4" maxlength="1" placeholder="auto" id="delimiter" style="width:4em"><a href="javascript:" id="insert-tab">tab</a>
+						<dfn>The delimiting character. Usually comma or tab. Default is comma.</dfn>
+					</label>
+					<label>
+						Comment char:<input type="text" size="7" maxlength="10" placeholder="default" id="comments">
+						<dfn>If specified, skips lines starting with this string.</dfn>
+					</label>
+				</div>
+
+				<div class="grid-66 pull-33">
+					<div class="input-area" id="input-local">							
+						<div class="text-center">
+							Choose the CSV file to load.
+						</div>
+						<input type="file" id="files" onchange="enableSubmit();">
+						<div class="text-center">
+							Choose the process to apply.
+						</div>
+						<select class="field" id="action" onchange="enableSubmit();">
+							<option value="" selected >Select a one-step action to run</option>
+						</select>
+					</div>
+					<div class="text-center">
+						<div class="see-results">
+							CSV contents will be loaded to the Cherwell Imports table object.
+						</div>
+						<div>
+							<span id="progress"></span>
+						</div>
+						<button id="submit" class="green" disabled >Import</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+
+
